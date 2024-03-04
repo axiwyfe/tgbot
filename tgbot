@@ -3,7 +3,7 @@ import webbrowser
 from telebot import types
 import sqlite3
 
-bot = telebot.TeleBot('7077187864:AAFXoyiVbjTnelYDXBtwdvd0uTGu6IS1xo8')
+bot = telebot.TeleBot('suck')
 
 name = None
 
