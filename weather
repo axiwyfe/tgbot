@@ -1,0 +1,27 @@
+import telebot
+import requests
+import json
+
+bot = telebot.TeleBot('6386409276:AAFC2_KRzCRLWlDnuU6mIJ5CNjtNJ0Tnw-E')
+API = '485264266aaf904f58f34805170eb9da'
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.chat.id, 'Привет! Для того чтобы узнать погоду напиши название города')
+
+
+
+@bot.message_handler(content_types=['text'])
+def get_weather(message):
+    city = message.text.strip().lower()
+    res = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API}&units=metric')
+    if res.status_code == 200:
+        data = json.loads(res.text)
+        temp = data["main"]["temp"]
+        bot.reply_to(message, f'Сейчас погода: {temp}')
+    else:
+        bot.reply_to(message, f'Такого города не существует!')
+
+
+
+bot.polling(none_stop=True)
